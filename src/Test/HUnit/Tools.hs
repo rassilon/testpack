@@ -185,6 +185,9 @@ localquickCheckWithResult args p =
                  , collected         = []
                  , expectedFailure   = False
                  , randomSeed        = rnd
+#if !(MIN_VERSION_QuickCheck(2,3,0))
+                 , isShrinking       = False
+#endif
                  , numSuccessShrinks = 0
                  , numTryShrinks     = 0
                  } (unGen (property p))
