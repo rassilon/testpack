@@ -221,7 +221,9 @@ localquickCheckWithResult args p =
     giveUp :: State -> (StdGen -> Int -> Prop) -> IO Result
     giveUp st f =
       do
+#if MIN_VERSION_QuickCheck(2,3,0)
         theOutput <- terminalOutput (terminal st)
+#endif
         return GaveUp{ numTests = numSuccessTests st
                      , labels   = summary st
 #if MIN_VERSION_QuickCheck(2,3,0)
@@ -268,8 +270,8 @@ localquickCheckWithResult args p =
 #endif
                if not (expect res) then
                  return Success{ labels = summary st
-                               , numTests = numSuccessTests st+1
 #if MIN_VERSION_QuickCheck(2,3,0)
+                               , numTests = numSuccessTests st+1
                                , output = theOutput
 #endif 
                                }
